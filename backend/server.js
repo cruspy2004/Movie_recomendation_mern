@@ -1,19 +1,29 @@
+// Import necessary modules
 import express from "express";
-import dotenv from "dotenv";
-import authRoutes from "./routes/auth.route.js";
-import { ENV_VARS } from "./config/envVars.js";
-import { connect } from "mongoose";
-import {connectDB} from "./config/db.js"
-dotenv.config(); // Load .env file
+import dotenv from "dotenv"; // For loading environment variables from .env file
+import authRoutes from "./routes/auth.route.js"; // Auth-related API routes
+import { ENV_VARS } from "./config/envVars.js"; // Custom wrapper to access environment variables
+import { connect } from "mongoose"; // (Optional: not used directly here)
+import { connectDB } from "./config/db.js"; // Custom function to connect to MongoDB
 
-const app = express();
-const PORT = ENV_VARS.port
-console.log('MONGO_URI:', process.env.MONGO_URI); // Use the correct variable name
+// Load environment variables from .env into process.env
+dotenv.config();
 
-app.use(express.json())// will allow to parse the req.body
+const app = express(); // Create an Express app instance
+const PORT = ENV_VARS.port; // Port defined in envVars.js or fallback
+
+// Log MongoDB URI (for debug purposes only, remove in production)
+console.log('MONGO_URI:', process.env.MONGO_URI);
+
+// Middleware to parse incoming JSON payloads
+app.use(express.json());
+
+// Route handler for authentication-related API endpoints
+// Example: /api/v1/auth/login, /api/v1/auth/register
 app.use("/api/v1/auth", authRoutes);
 
+// Start server and connect to database
 app.listen(PORT, () => {
-    console.log("Server started at http://localhost:"+ PORT);
-    connectDB(); 
+    console.log("Server started at http://localhost:" + PORT);
+    connectDB(); // Establish connection to MongoDB
 });
