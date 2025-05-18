@@ -1,3 +1,4 @@
+// Import necessary modules
 import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -32,7 +33,8 @@ if (ENV_VARS.NODE_ENV === "production") {
 	});
 }
 
+// Start server and connect to database
 app.listen(PORT, () => {
-	console.log("Server started at http://localhost:" + PORT);
-	connectDB();
+    console.log("Server started at http://localhost:" + PORT);
+    connectDB(); // Establish connection to MongoDB
 });
