@@ -1,26 +1,37 @@
 // Import necessary modules
 import express from "express";
-import dotenv from "dotenv"; // For loading environment variables from .env file
-import authRoutes from "./routes/auth.route.js"; // Auth-related API routes
-import { ENV_VARS } from "./config/envVars.js"; // Custom wrapper to access environment variables
-import { connect } from "mongoose"; // (Optional: not used directly here)
-import { connectDB } from "./config/db.js"; // Custom function to connect to MongoDB
+import cookieParser from "cookie-parser";
+import path from "path";
 
-// Load environment variables from .env into process.env
-dotenv.config();
+import authRoutes from "./routes/auth.route.js";
+import movieRoutes from "./routes/movie.route.js";
+import tvRoutes from "./routes/tv.route.js";
+import searchRoutes from "./routes/search.route.js";
 
-const app = express(); // Create an Express app instance
-const PORT = ENV_VARS.port; // Port defined in envVars.js or fallback
+import { ENV_VARS } from "./config/envVars.js";
+import { connectDB } from "./config/db.js";
+import { protectRoute } from "./middleware/protectRoute.js";
 
-// Log MongoDB URI (for debug purposes only, remove in production)
-console.log('MONGO_URI:', process.env.MONGO_URI);
+const app = express();
 
-// Middleware to parse incoming JSON payloads
-app.use(express.json());
+const PORT = ENV_VARS.PORT;
+const __dirname = path.resolve();
 
-// Route handler for authentication-related API endpoints
-// Example: /api/v1/auth/login, /api/v1/auth/register
+app.use(express.json()); // will allow us to parse req.body
+app.use(cookieParser());
+
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/movie", protectRoute, movieRoutes);
+app.use("/api/v1/tv", protectRoute, tvRoutes);
+app.use("/api/v1/search", protectRoute, searchRoutes);
+
+if (ENV_VARS.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+	});
+}
 
 // Start server and connect to database
 app.listen(PORT, () => {
