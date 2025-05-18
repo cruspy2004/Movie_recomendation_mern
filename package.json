@@ -1,31 +1,31 @@
 {
-  "name": "netflix_clone",
-  "version": "1.0.0",
-  "description": "",
-  "main": "backend/server.js",
+  "name": "netflix_clone", // Project name
+  "version": "1.0.0", // Initial version
+  "description": "", // You can add a short description of your project here
+  "main": "backend/server.js", // Entry point of your backend application
   "scripts": {
-    "dev": "node --watch backend/server.js"
+    "dev": "node --watch backend/server.js" // Dev script to auto-restart backend server when files change
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cruspy2004/Movie_recomendation_mern.git"
+    "url": "git+https://github.com/cruspy2004/Movie_recomendation_mern.git" // GitHub repo URL
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
+  "keywords": [], // You can add search keywords for NPM or internal usage
+  "author": "", // You can add your name or GitHub username here
+  "license": "ISC", // ISC is a permissive open-source license
+  "type": "module", // Enables ES module (import/export) support in Node.js
   "bugs": {
-    "url": "https://github.com/cruspy2004/Movie_recomendation_mern/issues"
+    "url": "https://github.com/cruspy2004/Movie_recomendation_mern/issues" // Where users can report issues
   },
-  "homepage": "https://github.com/cruspy2004/Movie_recomendation_mern#readme",
+  "homepage": "https://github.com/cruspy2004/Movie_recomendation_mern#readme", // Homepage or README URL
   "dependencies": {
-    "axios": "^1.9.0",
-    "bcryptjs": "^3.0.2",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.14.3",
-    "nodemon": "^3.1.10"
+    "axios": "^1.9.0", // For making HTTP requests (used on client or server)
+    "bcryptjs": "^3.0.2", // For password hashing and comparing (authentication)
+    "cookie-parser": "^1.4.7", // Middleware to parse cookies in requests
+    "dotenv": "^16.5.0", // Loads environment variables from .env file
+    "express": "^5.1.0", // Node.js web application framework (backend)
+    "jsonwebtoken": "^9.0.2", // For creating and verifying JWTs (auth)
+    "mongoose": "^8.14.3", // MongoDB ODM (used to interact with the database)
+    "nodemon": "^3.1.10" // Auto-restarts server during development
   }
 }
