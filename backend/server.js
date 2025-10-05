@@ -49,9 +49,12 @@ if (ENV_VARS.NODE_ENV === "production") {
 }
 
 // Start server and connect to database
-// app.listen(PORT, () => {
-//     console.log("Server started at http://localhost:" + PORT);
-//     connectDB(); // Establish connection to MongoDB
-// });
+if(ENV_VARS.NODE_ENV !== 'production'){
+	app.listen(PORT, () => {
+		console.log("Server started at http://localhost:" + PORT);
+		connectDB(); // Establish connection to MongoDB
+});
+}
+
 
 export default app;
