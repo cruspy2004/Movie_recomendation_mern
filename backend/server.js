@@ -1,6 +1,7 @@
 // Import necessary modules
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import path from "path";
 
 import authRoutes from "./routes/auth.route.js";
@@ -20,6 +21,20 @@ const __dirname = path.resolve();
 app.use(express.json()); // will allow us to parse req.body
 app.use(cookieParser());
 
+// Enable CORS so frontend deployed on a different origin can call the API.
+// Allow credentials (cookies) and common methods. In production, consider
+// restricting origin to your frontend domain (e.g. https://your-app.vercel.app)
+// Read allowed origin from env (set this to your frontend URL in production).
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || true; // set to a string like 'https://your-frontend.vercel.app'
+
+app.use(
+	cors({
+		origin: ALLOWED_ORIGIN,
+		credentials: true,
+		methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+	})
+);
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/movie", protectRoute, movieRoutes);
 app.use("/api/v1/tv", protectRoute, tvRoutes);
@@ -38,3 +53,5 @@ app.listen(PORT, () => {
     console.log("Server started at http://localhost:" + PORT);
     connectDB(); // Establish connection to MongoDB
 });
+
+export default app;
