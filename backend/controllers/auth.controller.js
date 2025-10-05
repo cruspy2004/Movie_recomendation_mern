@@ -46,7 +46,7 @@ export async function signup(req, res) {
 			image,
 		});
 
-		generateTokenAndSetCookie(newUser._id, res);
+		const token = generateTokenAndSetCookie(newUser._id, res);
 		await newUser.save();
 
 		res.status(201).json({
@@ -55,6 +55,7 @@ export async function signup(req, res) {
 				...newUser._doc,
 				password: "",
 			},
+			token,
 		});
 	} catch (error) {
 		console.log("Error in signup controller", error.message);
