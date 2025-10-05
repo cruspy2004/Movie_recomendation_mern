@@ -34,6 +34,7 @@ app.use(
 		methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 	})
 );
+connectDB();
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/movie", protectRoute, movieRoutes);
@@ -52,7 +53,7 @@ if (ENV_VARS.NODE_ENV === "production") {
 if(ENV_VARS.NODE_ENV !== 'production'){
 	app.listen(PORT, () => {
 		console.log("Server started at http://localhost:" + PORT);
-		connectDB(); // Establish connection to MongoDB
+		 // Establish connection to MongoDB
 });
 }
 
